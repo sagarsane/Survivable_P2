@@ -1,0 +1,19 @@
+Current i: 0	 Current k: 0
+Circuit Formed: 	1	2	3	5
+Current K in Else: 2
+Current K in Else: 1
+Circuit Formed: 	1	2	4	3	5
+Current K in Else: 3
+Current K in Else: 2
+Current K in Else: 1
+Current K in Else: 0
+Current i: 1	 Current k: 0
+Current K in Else: 1
+Current K in Else: 0
+Current K in Else: 2
+Current K in Else: 1
+Current K in Else: 0
+Circuit Formed: 	2
+Current i: 2	 Current k: 0
+Current K in Else: 0
+Current i: 3	 Current k: 0
