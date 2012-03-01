@@ -1,6 +1,5 @@
 #include "tiernan.h"
 
-
 void initialize_topology(){
         int i,j;
         if(!file){
@@ -70,6 +69,14 @@ int belongs_toG(int k){
         }
         return 0;
 }
+int length_of_circuit()
+{
+	int i;
+	for(i=0;p[i]!=-1 && i<total_nodes;i++);
+	//printf("length is: %d\n",i);
+	return i;
+}
+
 
 
 int path_extension(int k){
@@ -134,8 +141,8 @@ void tiernan(int end_node){
 				p[k] = g[p[k-1]].edge[j];
 			}
 			else{
-				if(belongs_toG(k)){ //circuit confirmation
-					//print_circuit();//circuit is reported
+				if(belongs_toG(k) && length_of_circuit()!=2){ //circuit confirmation
+					print_circuit();//circuit is reported
 					ckt++;
 				}
 				if(k == 0){	//vertex closure
@@ -148,8 +155,8 @@ void tiernan(int end_node){
 					set_H(k,1);
 					p[k] = -1;
 					k--;				
-					if(k < 5)
-					printf("Current K in Else: %d\n",k);
+				//	if(k < 5)
+					//printf("Current K in Else: %d\n",k);
 				}
 			}
 			
