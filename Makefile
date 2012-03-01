@@ -1,14 +1,14 @@
-includes = tiernan.h
-objects = tiernan.o
-sources = tiernan.c
-out = tiernan
+includes = tiernan.h tarjan.h
+objects = tiernan.o tarjan.o
+sources = tiernan.c tarjan.c
+out = tiernan tarjan
 
-all: $(objects) tiernan
+all: $(objects) tiernan tarjan
 
 $(objects): $(includes)
 
-#dijkstra: 
-#	cc -o modified_dijkstra modified_dijkstra.o -lm -lpthread
+tarjan: 
+	cc -o tarjan tarjan.o -lm -lpthread
 
 tiernan:
 	cc -o tiernan tiernan.o -lm -lpthread

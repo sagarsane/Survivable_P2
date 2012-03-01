@@ -142,7 +142,7 @@ void tiernan(int end_node){
 			}
 			else{
 				if(belongs_toG(k) && length_of_circuit()!=2){ //circuit confirmation
-					print_circuit();//circuit is reported
+					//print_circuit();//circuit is reported
 					ckt++;
 				}
 				if(k == 0){	//vertex closure
