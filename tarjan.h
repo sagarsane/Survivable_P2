@@ -26,5 +26,6 @@ Node *a;
 Stack point,marked;
 FILE *file;
 int total_nodes,s,ckt;
+int *visited_n,visited_cnt;
 int *mark;
 void initialize_topology();

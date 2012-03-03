@@ -32,6 +32,9 @@ void initialize_topology(){
 		p[i] = -1;
 	
 
+	visited_n = (int *)malloc(sizeof(int) * total_nodes);
+	  for(i = 0;i<total_nodes;i++)
+                visited_n[i] = -1;
 
         int temp_i = -1,temp_j = -1, faltu = -1;
         double temp_cost = 0.0f;
@@ -94,9 +97,9 @@ int path_extension(int k){
 
 void print_circuit(){
 	int i;
-	printf("Circuit Formed: ");
+	//printf("Circuit Formed: ");
 	for(i=0;p[i] != -1 && i<total_nodes;i++){
-		printf("\t%d",p[i] + 1);
+		printf("%d\t",p[i] + 1);
 
 	}
 	printf("\n");
@@ -109,6 +112,13 @@ void reset_H(){
 		for(j=0;j<total_nodes;j++)
 			h[i].edge[j] = -1;
 	
+}
+
+
+void reset_visited(){
+	int i;
+	for(i=0;i<total_nodes;i++)
+		visited_n[i] = -1;
 }
 
 void set_H(int k, int flag){
@@ -125,28 +135,54 @@ void set_H(int k, int flag){
 		}
 	}
 }
+
+void add_to_visited(int val){
+	int i;
+	for(i=0;i<visited_cnt;i++)
+		if(visited_n[i] == val)
+			return;
+	visited_n[visited_cnt++] = val;
+}
+
+int check_in_visited(){
+	int len,i;
+	for(len=0;p[len] != -1 && len < total_nodes; len++);
+	len--;
+	for(i=0;i<visited_cnt;i++){
+		if(visited_n[i] == p[len])
+			return 0;
+	}
+	return 1;
+}
+
 void tiernan(int end_node){
 	int k,i,j,ckt=0;
 	//p[0] = 0;
 	for(i = 0; i<end_node; i++){
+		visited_cnt = 0;
 		ckt = 0;
 		k = 0;
 		//printf("Current i: %d\t Current k: %d\n",i,k);
 		p[0] = i;
-
+		
 
 		while(1){
 			if((j=path_extension(k)) > -1){
 				k=k+1;
 				p[k] = g[p[k-1]].edge[j];
+				if(k == 1){
+					add_to_visited(p[k]);
+				}
 			}
 			else{
 				if(belongs_toG(k) && length_of_circuit()!=2){ //circuit confirmation
-					//print_circuit();//circuit is reported
-					ckt++;
+					if(check_in_visited()){
+						print_circuit();//circuit is reported
+						ckt++;
+					}
 				}
 				if(k == 0){	//vertex closure
-					printf("For i: %d, Circuits: %d\n",i+1,ckt);			
+				//	printf("For i: %d, Circuits: %d\n",i+1,ckt);
 					break;
 				}
 				else{
@@ -162,6 +198,7 @@ void tiernan(int end_node){
 			
 		}
 		reset_H();
+		reset_visited();
 
 	}
 }

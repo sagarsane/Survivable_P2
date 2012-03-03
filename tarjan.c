@@ -1,5 +1,15 @@
 #include "tarjan.h"
 
+
+void print_graph(){
+	int i,j;
+	for(i=0;i<total_nodes;i++){
+		printf("Node: %d\t - ",i + 1);
+		for(j=0;j < a[i].cnt; j++)
+			printf("%d\t",a[i].edge[j] + 1);
+		printf("\n");
+	}
+}
 void initialize_topology(){
         int i,j;
         if(!file){
@@ -26,15 +36,20 @@ void initialize_topology(){
 	marked.stk = (int *)malloc(sizeof(int) * total_nodes);
 	marked.top = -1;
 
-        int temp_i = -1,temp_j = -1, faltu = -1;
+        
+	visited_n = (int *)malloc(sizeof(int) * total_nodes);
+	int temp_i = -1,temp_j = -1, faltu = -1;
         double temp_cost = 0.0f;
         while(fscanf(file,"%d %d %lf %d",&temp_i,&temp_j,&temp_cost,&faltu)!= EOF){
-		a[temp_i-1].edge[a[temp_i-1].cnt] = temp_j - 1;
+		a[temp_i - 1].edge[a[temp_i-1].cnt] = temp_j - 1;
 		a[temp_i - 1].cnt ++;
 		a[temp_j-1].edge[a[temp_j-1].cnt] = temp_i - 1;
                 a[temp_j - 1].cnt ++;
         }
+
+	//print_graph();
 }
+
 
 int length_of_circuit()
 {
@@ -64,24 +79,59 @@ void delete_w(int i,int v,int w){
 	
 }	
 
+
+void add_to_visited(int val){
+        int i;
+        for(i=0;i<visited_cnt;i++)
+                if(visited_n[i] == val)
+                        return;
+        visited_n[visited_cnt++] = val;
+}
+
+int check_in_visited(){
+        int len,i;
+        for(i=0;i<visited_cnt;i++){
+                if(visited_n[i] == point.stk[point.top])
+                        return 0;
+        }
+        return 1;
+}
+
+
+void reset_visited(){
+        int i;
+        for(i=0;i<total_nodes;i++)
+                visited_n[i] = -1;
+}
+
+
+
 int backtrack(int v){
 	int f,g,w;
 	f = 0;
 	point.stk[++point.top] = v; // insert v onto point stack
 	//printf("Top of Point: %d\n",point.stk[point.top] + 1);
-
+	if(point.top == 1){
+		//if(s == 4)	
+		//	printf("Added %d to visited\n",v + 1);
+		add_to_visited(v);
+	}
 	mark[v] = 1;
 	marked.stk[++marked.top] = v;
 	int i;
 	for(i = 0;i < total_nodes && a[v].edge[i] != -1;i++){
 		w = a[v].edge[i] ;
+		//if((s == 4 || s == 2) && (v == s))
+			//printf("current w: %d\n",w + 1);
 		if( w < s ) {
-			delete_w(i,v,w);
+			delete_w(i--,v,w);
 		}
 		else if( w == s && length_of_circuit() != 2){
 			//print point stack as circuit;
-			//print_circuit();
-			ckt++;
+			if(check_in_visited()){
+				print_circuit();
+				ckt++;
+			}
 			f = 1;
 		}
 		else if( mark[w] != 1){
@@ -95,8 +145,9 @@ int backtrack(int v){
 		}
 		mark[marked.stk[marked.top--]] = 0;
 	}
-	
-	point.top--; // delete v from point stack
+
+		
+	point.stk[point.top--] = -1; // delete v from point stack
 	return f;
 }
 
@@ -107,14 +158,16 @@ void tarjan(int end_node){
 	for(i = 0;i<total_nodes;i++)
 		mark[i] = 0;
 	for(i=0;i<total_nodes;i++){
+		visited_cnt = 0;
 		ckt = 0;
-		printf("****For Current node: %d\n",i+1);
+		//printf("****For Current node: %d\n",i+1);
 		s = i;
 		flag = backtrack(i);
-		printf("Ckt cnt: %d\n",ckt);
+		//printf("Ckt cnt: %d\n",ckt);
 		while(marked.top != -1){
 			mark[marked.stk[marked.top--]] = 0;
 		}
+		reset_visited();
 	}
 }
 

@@ -20,6 +20,7 @@ typedef struct node_{
 Node *g,*h;
 FILE *file;
 int *p;
+int *visited_n,visited_cnt;
 int total_nodes;
 
 void initialize_topology();

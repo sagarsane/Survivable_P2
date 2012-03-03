@@ -1,19 +1,114 @@
-Current i: 0	 Current k: 0
-Circuit Formed: 	1	2	3	5
-Current K in Else: 2
-Current K in Else: 1
-Circuit Formed: 	1	2	4	3	5
-Current K in Else: 3
-Current K in Else: 2
-Current K in Else: 1
-Current K in Else: 0
-Current i: 1	 Current k: 0
-Current K in Else: 1
-Current K in Else: 0
-Current K in Else: 2
-Current K in Else: 1
-Current K in Else: 0
-Circuit Formed: 	2
-Current i: 2	 Current k: 0
-Current K in Else: 0
-Current i: 3	 Current k: 0
+****For Current node: 1
+Added 2 to visited
+1	2	3	4	5	6	8	9	10	
+1	2	3	4	5	6	8	10	
+1	2	3	4	5	6	8	
+1	2	3	4	5	6	7	9	8	10	
+1	2	3	4	5	6	7	9	8	
+1	2	3	4	5	6	7	9	10	8	
+1	2	3	4	5	6	7	9	10	
+1	2	3	4	5	8	6	7	9	10	
+1	2	3	4	5	8	9	10	
+1	2	3	4	5	8	10	
+1	2	3	4	5	8	
+1	2	3	4	5	7	6	8	9	10	
+1	2	3	4	5	7	6	8	10	
+1	2	3	4	5	7	6	8	
+1	2	3	4	5	7	9	8	10	
+1	2	3	4	5	7	9	8	
+1	2	3	4	5	7	9	10	8	
+1	2	3	4	5	7	9	10	
+1	2	3	8	5	6	7	9	10	
+1	2	3	8	5	7	9	10	
+1	2	3	8	6	5	7	9	10	
+1	2	3	8	6	7	9	10	
+1	2	3	8	9	10	
+1	2	3	8	10	
+1	2	3	8	
+Added 10 to visited
+1	10	9	7	6	5	4	3	2	
+1	10	9	7	6	5	4	3	8	
+1	10	9	7	6	5	8	3	2	
+1	10	9	7	6	5	8	
+1	10	9	7	6	8	5	4	3	2	
+1	10	9	7	6	8	3	2	
+1	10	9	7	6	8	
+1	10	9	7	5	4	3	2	
+1	10	9	7	5	4	3	8	
+1	10	9	7	5	6	8	3	2	
+1	10	9	7	5	6	8	
+1	10	9	7	5	8	3	2	
+1	10	9	7	5	8	
+1	10	9	8	5	4	3	2	
+1	10	9	8	3	2	
+1	10	9	8	6	5	4	3	2	
+1	10	9	8	6	7	5	4	3	2	
+1	10	9	8	
+1	10	8	5	4	3	2	
+1	10	8	3	2	
+1	10	8	6	5	4	3	2	
+1	10	8	6	7	5	4	3	2	
+1	10	8	9	7	6	5	4	3	2	
+1	10	8	9	7	5	4	3	2	
+1	10	8	
+Added 8 to visited
+1	8	5	4	3	2	
+1	8	5	6	7	9	10	
+1	8	5	7	9	10	
+1	8	3	2	
+1	8	3	4	5	6	7	9	10	
+1	8	3	4	5	7	9	10	
+1	8	6	5	4	3	2	
+1	8	6	5	7	9	10	
+1	8	6	7	5	4	3	2	
+1	8	6	7	9	10	
+1	8	9	7	6	5	4	3	2	
+1	8	9	7	5	4	3	2	
+1	8	9	10	
+1	8	10	9	7	6	5	4	3	2	
+1	8	10	9	7	5	4	3	2	
+1	8	10	
+Ckt cnt: 66
+****For Current node: 2
+Ckt cnt: 0
+****For Current node: 3
+Added 8 to visited
+3	8	5	4	
+3	8	6	5	4	
+3	8	6	7	5	4	
+3	8	9	7	6	5	4	
+3	8	9	7	5	4	
+3	8	10	9	7	6	5	4	
+3	8	10	9	7	5	4	
+Ckt cnt: 7
+****For Current node: 4
+Ckt cnt: 0
+****For Current node: 5
+Added 8 to visited
+5	8	9	7	6	
+5	8	9	7	
+5	8	10	9	7	6	
+5	8	10	9	7	
+Added 7 to visited
+5	7	6	
+5	7	6	8	
+5	7	9	8	
+5	7	9	8	6	
+5	7	9	10	8	
+5	7	9	10	8	6	
+Ckt cnt: 10
+****For Current node: 6
+Added 7 to visited
+Ckt cnt: 0
+****For Current node: 7
+Ckt cnt: 0
+****For Current node: 8
+Added 9 to visited
+8	9	10	
+Added 10 to visited
+8	10	9	
+Ckt cnt: 2
+****For Current node: 9
+Ckt cnt: 0
+****For Current node: 10
+Ckt cnt: 0
