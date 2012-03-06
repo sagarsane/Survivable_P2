@@ -22,7 +22,7 @@ typedef struct stack_{
 }Stack;
 
 
-Node *a,*b;
+Node *a,*b,*g;
 Stack stack;
 FILE *file;
 int total_nodes,s,ckt;

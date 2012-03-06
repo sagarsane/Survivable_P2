@@ -23,14 +23,22 @@ void initialize_topology(){
 	blocked = (int *)calloc(sizeof(int),total_nodes);
 
 
-        a = (Node *)malloc(sizeof(Node)*total_nodes);//Initializing G[n,m]
+        g = (Node *)malloc(sizeof(Node)*total_nodes);//Initializing G[n,m]
 		
+        for(i = 0;i< total_nodes;i++){ //initialize node structure
+                g[i].edge = (int *)malloc(sizeof(int) * total_nodes);
+                for(j = 0;j < total_nodes;j++)
+                        g[i].edge[j] = 0;
+        }
+
+	a = (Node *)malloc(sizeof(Node)*total_nodes);//Initializing G[n,m]
+
         for(i = 0;i< total_nodes;i++){ //initialize node structure
                 a[i].edge = (int *)malloc(sizeof(int) * total_nodes);
                 for(j = 0;j < total_nodes;j++)
                         a[i].edge[j] = -1;
-		a[i].cnt = 0;
         }
+
 
         b = (Node *)malloc(sizeof(Node)*total_nodes);//Initializing G[n,m]
         for(i = 0;i< total_nodes;i++){ //initialize node structure
@@ -44,17 +52,16 @@ void initialize_topology(){
 	stack.stk = (int *)malloc(sizeof(int) * total_nodes);
 	stack.top = -1;
 
+	visited_n = (int *)malloc(sizeof(int)*total_nodes);
+	for(i=0;i<total_nodes;i++)
+		visited_n[i]= -1;
+	
 
-        
-
-	visited_n = (int *)malloc(sizeof(int) * total_nodes);
 	int temp_i = -1,temp_j = -1, faltu = -1;
         double temp_cost = 0.0f;
         while(fscanf(file,"%d %d %lf %d",&temp_i,&temp_j,&temp_cost,&faltu)!= EOF){
-		a[temp_i - 1].edge[a[temp_i-1].cnt] = temp_j - 1;
-		a[temp_i - 1].cnt ++;
-		a[temp_j-1].edge[a[temp_j-1].cnt] = temp_i - 1;
-                a[temp_j - 1].cnt ++;
+		g[temp_i - 1].edge[temp_j-1] = 1;
+		g[temp_j-1].edge[temp_i-1] = 1;
         }
 
 	//print_graph();
@@ -152,18 +159,20 @@ void unblock(int u){
 }
 
 int circuit(int v){
-	int f,w;
+	int f,w,i;
+	printf("current vetrex is %d\n",v);
 	f = 0;
 	stack.stk[++stack.top] = v;
 	blocked[v] = 1;
-	for(w=0;w < total_nodes && a[v].edge[w] != -1;w++){
+	for(i=0;i < total_nodes && a[v].edge[i] != -1;i++){
+		w = a[v].edge[i];
 		if(w == s && length_of_circuit() > 2)
 		{
 			if(check_in_visited())
 				print_circuit();
 			f = 1;
 		}
-		else if( blocked[w] != 1){
+		else if( blocked[w] != 1 && w>s){
 			if(circuit(w))
 				f = 1;
 		}
@@ -180,6 +189,28 @@ int circuit(int v){
 	stack.stk[stack.top--] = -1;
 	return f;
 }
+
+
+void dfs(int start)
+{
+        int i;
+        visited_n[start]=1;
+        a[s].edge[a[s].cnt++]=start;
+        for(i=0;i<total_nodes;i++){
+                if(visited_n[i] == -1 && g[start].edge[i] == 1)
+                        dfs(i);
+        }
+
+
+}
+void print_ak(int i)
+{
+        int j;
+        for(j=0;j<total_nodes;j++)
+                printf("%d ",a[i].edge[j]+1);
+        printf("\n");
+}
+
 		
 
 void johnson(int end_node){
@@ -190,8 +221,14 @@ void johnson(int end_node){
 	for(i=0;i<total_nodes;i++){
 		visited_cnt = 0;
 		ckt = 0;
-		//printf("****For Current node: %d\n",i+1);
+		printf("****For Current node: %d\n",i+1);
 		s = i;
+
+		dfs(i);
+                reset_visited();
+                printf("dfs for %d node: ",i+1);
+                print_ak(i);
+
 		for(j = 0;j<total_nodes;j++){
 	                b[i].edge[j] = -1;
 			blocked[j] = 0;
@@ -204,7 +241,6 @@ void johnson(int end_node){
 }
 
 
-
 int main(int argc, char *argv[]){
         int i, end_node;
 	
@@ -214,6 +250,7 @@ int main(int argc, char *argv[]){
                 perror("Incorrect command line arguments\n");
                 exit(-1);
         }
+	
         file = fopen(argv[1],"r");
         initialize_topology();
 	if(argc == 3)
@@ -221,8 +258,6 @@ int main(int argc, char *argv[]){
 	else
 		end_node = total_nodes;
 
-	
 	johnson(end_node);
-	
 	
 }
