@@ -1,6 +1,5 @@
 #include "johnson.h"
 
-
 void print_graph(){
 	int i,j;
 	for(i=0;i<total_nodes;i++){
@@ -37,6 +36,7 @@ void initialize_topology(){
                 a[i].edge = (int *)malloc(sizeof(int) * total_nodes);
                 for(j = 0;j < total_nodes;j++)
                         a[i].edge[j] = -1;
+		a[i].cnt = 0;
         }
 
 
@@ -59,9 +59,18 @@ void initialize_topology(){
 
 	int temp_i = -1,temp_j = -1, faltu = -1;
         double temp_cost = 0.0f;
-        while(fscanf(file,"%d %d %lf %d",&temp_i,&temp_j,&temp_cost,&faltu)!= EOF){
-		g[temp_i - 1].edge[temp_j-1] = 1;
-		g[temp_j-1].edge[temp_i-1] = 1;
+
+     /*   while(fscanf(file,"%d %d %lf %d",&temp_i,&temp_j,&temp_cost,&faltu)!= EOF){
+                g[temp_i-1].edge[temp_j-1] = 1;
+                //g[temp_i - 1].cnt ++;
+                g[temp_j-1].edge[temp_i-1]=1;
+               //g[temp_j - 1].cnt ++;
+        }*/
+	while(fscanf(file,"%d %d %lf %d",&temp_i,&temp_j,&temp_cost,&faltu)!= EOF){
+                a[temp_i-1].edge[a[temp_i-1].cnt] = temp_j - 1;
+                a[temp_i - 1].cnt ++;
+                a[temp_j-1].edge[a[temp_j-1].cnt] = temp_i - 1;
+                a[temp_j - 1].cnt ++;
         }
 
 	//print_graph();
@@ -70,9 +79,6 @@ void initialize_topology(){
 
 int length_of_circuit()
 {
-        //int i;
-        //for(i=0;p[i]!=-1 && i<total_nodes;i++);
-        //printf("length is: %d\n",i);
         return stack.top + 1;
 }
 
@@ -80,29 +86,22 @@ int length_of_circuit()
 
 void print_circuit(){
 	int i;
-	//printf("Circuit formed for: %d\n",s + 1);
+//	printf("Circuit formed for: %d and top is %d\n",s + 1,stack.top);
 
 	for(i = 0;i <= stack.top;i++)
 		printf("%d\t",stack.stk[i] + 1);
 	printf("\n");
 }
 
-void delete_fromB(int r,int val){
+void delete_fromB(int r,int pos){
 
 	int j;
-	int pos;
-	for(pos = 0; pos < a[r].cnt; pos++)
-		if(a[r].edge[pos] == val)
-			break;
-	if(pos == a[r].cnt){
-		printf(":(\n");
-		exit(0);
-	}
 
 	for(j = pos; j < total_nodes-1; j++){
-		a[r].edge[j] = a[r].edge[j+1];
+		b[r].edge[j] = b[r].edge[j+1];
 	}
-	a[r].edge[j] = -1;
+	b[r].cnt--;
+	b[r].edge[j] = -1;
 	
 }	
 
@@ -149,10 +148,14 @@ void add_toB(int r, int val){
 
 
 void unblock(int u){
-	int w;
+	int i,w;
 	blocked[u] = 0;
-	for(w = 0; w < b[u].cnt; w++){
-		delete_fromB(u,w);
+//	printf("current u is %d and count is %d\n",u,b[u].cnt);
+	for(i = 0; i < b[u].cnt; i++){
+		w = b[u].edge[i];
+		//if(stack.top>10)
+		//	printf("deleting w: %d\n",w);
+		delete_fromB(u,i);
 		if(blocked[w] == 1)
 			unblock(w);
 	}
@@ -160,20 +163,23 @@ void unblock(int u){
 
 int circuit(int v){
 	int f,w,i;
-	printf("current vetrex is %d\n",v);
+//	printf("current vetrex is %d\n",v);
 	f = 0;
+/*	for(i=0;i<stack.top;i++)
+		fprintf(stderr,"  ");
+	fprintf(stderr,"stacked %d\n",v);*/
 	stack.stk[++stack.top] = v;
 	blocked[v] = 1;
-	for(i=0;i < total_nodes && a[v].edge[i] != -1;i++){
+	for(i=0;i < a[v].cnt;i++){
 		w = a[v].edge[i];
-		if(w == s && length_of_circuit() > 2)
+		if(w == s)// && length_of_circuit() > 2)
 		{
-			if(check_in_visited())
+			//if(check_in_visited())
 				print_circuit();
 			f = 1;
 		}
-		else if( blocked[w] != 1 && w>s){
-			if(circuit(w))
+		else if( blocked[w] != 1){// && w>s){
+			if(circuit(w)==1)
 				f = 1;
 		}
 	}
@@ -181,12 +187,16 @@ int circuit(int v){
 		unblock(v);
 	}
 	else{
-		for(w = 0; w < total_nodes && a[v].edge[w] != -1; w++){
+		for(i = 0; i < a[v].cnt; i++){
+			w = a[v].edge[i];
 			if(!belongs_toB(w,v))
 				add_toB(w,v);
 		}
 	}
 	stack.stk[stack.top--] = -1;
+/*	for(i=0;i<stack.top;i++)
+		fprintf(stderr,"  ");
+	fprintf(stderr,"unstacked %d\n",v);*/
 	return f;
 }
 
@@ -210,7 +220,31 @@ void print_ak(int i)
                 printf("%d ",a[i].edge[j]+1);
         printf("\n");
 }
-
+void find_ak(int cur_val)
+{
+	if(cur_val==0)
+		return;	
+	else{
+		int i,j,k;
+		int prev_val=cur_val-1;
+		for(i=0;i<total_nodes;i++)
+		{
+			a[prev_val].edge[i] = -1;
+		}
+		a[prev_val].cnt = 0;
+		for(i=cur_val;i<total_nodes;i++)
+			for(j=0;j<a[i].cnt;j++)
+				if(a[i].edge[j] == prev_val){
+					for(k=j;k < total_nodes-1;k++){
+						a[i].edge[k] = a[i].edge[k+1];
+					}
+					a[i].cnt--;
+					a[i].edge[k] = -1;
+					break;
+				}
+					
+	}
+}
 		
 
 void johnson(int end_node){
@@ -221,22 +255,27 @@ void johnson(int end_node){
 	for(i=0;i<total_nodes;i++){
 		visited_cnt = 0;
 		ckt = 0;
+		//stack.top=-1;
 		printf("****For Current node: %d\n",i+1);
 		s = i;
 
-		dfs(i);
-                reset_visited();
-                printf("dfs for %d node: ",i+1);
-                print_ak(i);
+		//dfs(i);
+                //reset_visited();
+                //printf("dfs for %d node: ",i+1);
+		find_ak(i);
+//		print_graph();
+//		printf("Circuits are\n");
+                //print_ak(i);
 
 		for(j = 0;j<total_nodes;j++){
 	                b[i].edge[j] = -1;
 			blocked[j] = 0;
 		}
+		b[i].cnt =0;
 		flag = circuit(i);
 		
 		//printf("Ckt cnt: %d\n",ckt);
-		reset_visited();
+		//reset_visited();
 	}
 }
 
