@@ -151,19 +151,19 @@ int backtrack(int v){
 	return f;
 }
 
-void tarjan(int end_node){
+void tarjan(int start_node, int end_node){
 	int i;
 	int flag = 0;
 	
 	for(i = 0;i<total_nodes;i++)
 		mark[i] = 0;
-	for(i=0;i<total_nodes;i++){
+	for(i=start_node;i<end_node;i++){
 		visited_cnt = 0;
 		ckt = 0;
 		//printf("****For Current node: %d\n",i+1);
 		s = i;
 		flag = backtrack(i);
-		//printf("Ckt cnt: %d\n",ckt);
+		printf("Ckt cnt: %d\n",ckt);
 		while(marked.top != -1){
 			mark[marked.stk[marked.top--]] = 0;
 		}
@@ -174,23 +174,26 @@ void tarjan(int end_node){
 
 
 int main(int argc, char *argv[]){
-        int i, end_node;
+        int i, start_node, end_node;
 	
         total_nodes = -1;
 
-        if(argc > 3 || argc < 2){
+        if(argc > 4 || argc < 3){
                 perror("Incorrect command line arguments\n");
                 exit(-1);
         }
         file = fopen(argv[1],"r");
         initialize_topology();
-	if(argc == 3)
-	        end_node = atoi(argv[2]);
-	else
-		end_node = total_nodes;
+	start_node = atoi(argv[2]) - 1;
+	if(argc == 4){
+	        end_node = atoi(argv[3]);
+		tarjan(start_node, end_node);
+	}
+	else{
+		//end_node = total_nodes;
+		tarjan(start_node, start_node +1);
+	}
 
-	
-	tarjan(end_node);
 	
 	
 }

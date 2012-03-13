@@ -3,10 +3,10 @@
 void print_graph(){
 	int i,j;
 	for(i=0;i<total_nodes;i++){
-		printf("Node: %d\t - ",i + 1);
+		printf("Node: %d - ",i + 1);
 		for(j=0;j < a[i].cnt; j++)
 			printf("%d\t",a[i].edge[j] + 1);
-		printf("\n");
+		printf("\t Count is: %d\n",a[i].cnt);
 	}
 }
 void initialize_topology(){
@@ -88,8 +88,12 @@ void print_circuit(){
 	int i;
 //	printf("Circuit formed for: %d and top is %d\n",s + 1,stack.top);
 
-	for(i = 0;i <= stack.top;i++)
+	for(i = 0;i <= stack.top;i++){
 		printf("%d\t",stack.stk[i] + 1);
+	//	if(i > total_nodes)
+	//	printf("i: %d :-o top: %d\n",i,stack.top);
+	//	printf("\n");
+	}
 	printf("\n");
 }
 
@@ -132,7 +136,7 @@ void reset_visited(){
 
 
 int belongs_toB(int r,int val){
-	int i,j;
+	int i;
 	for(i = 0;i < b[r].cnt; i++){
 		if(b[r].edge[i] == val)
 			return 1;
@@ -156,9 +160,20 @@ void unblock(int u){
 		//if(stack.top>10)
 		//	printf("deleting w: %d\n",w);
 		delete_fromB(u,i);
+		i--;
 		if(blocked[w] == 1)
 			unblock(w);
 	}
+}
+
+void printB(){
+	int i,j;
+	for(i=0;i<total_nodes;i++){
+                printf("Node: %d\t - ",i + 1);
+                for(j=0;j < b[i].cnt; j++)
+                        printf("%d\t",b[i].edge[j] + 1);
+                printf("\t Count is: %d\n",b[i].cnt);
+        }
 }
 
 int circuit(int v){
@@ -169,14 +184,23 @@ int circuit(int v){
 		fprintf(stderr,"  ");
 	fprintf(stderr,"stacked %d\n",v);*/
 	stack.stk[++stack.top] = v;
+	
+	if(stack.top == 1)
+		add_to_visited(v);
 	blocked[v] = 1;
 	for(i=0;i < a[v].cnt;i++){
 		w = a[v].edge[i];
-		if(w == s)// && length_of_circuit() > 2)
+		if(w == s)
 		{
-			//if(check_in_visited())
+			if(check_in_visited() && length_of_circuit() > 2)
+			{ 
+				//printB();
 				print_circuit();
+				ckt++;
+				//getchar();
+			}
 			f = 1;
+			
 		}
 		else if( blocked[w] != 1){// && w>s){
 			if(circuit(w)==1)
@@ -184,12 +208,14 @@ int circuit(int v){
 		}
 	}
 	if(f == 1){
+//		if(v==5)
+//			printf("Unblocking node 5\n");
 		unblock(v);
 	}
 	else{
 		for(i = 0; i < a[v].cnt; i++){
 			w = a[v].edge[i];
-			if(!belongs_toB(w,v))
+			if(belongs_toB(w,v) == 0)
 				add_toB(w,v);
 		}
 	}
@@ -247,23 +273,23 @@ void find_ak(int cur_val)
 }
 		
 
-void johnson(int end_node){
+void johnson(int start_node, int end_node){
 	int i,j;
 	int flag = 0;
 	
 
-	for(i=0;i<total_nodes;i++){
+	for(i=start_node;i<end_node;i++){
 		visited_cnt = 0;
 		ckt = 0;
 		//stack.top=-1;
-		printf("****For Current node: %d\n",i+1);
+		//printf("****For Current node: %d\n",i+1);
 		s = i;
 
 		//dfs(i);
-                //reset_visited();
                 //printf("dfs for %d node: ",i+1);
 		find_ak(i);
-//		print_graph();
+	//	print_graph();
+		//getchar();
 //		printf("Circuits are\n");
                 //print_ak(i);
 
@@ -274,29 +300,35 @@ void johnson(int end_node){
 		b[i].cnt =0;
 		flag = circuit(i);
 		
-		//printf("Ckt cnt: %d\n",ckt);
-		//reset_visited();
+		printf("Ckt cnt: %d\n",ckt);
+		reset_visited();
 	}
 }
 
 
 int main(int argc, char *argv[]){
-        int i, end_node;
+        int i, start_node, end_node;
 	
         total_nodes = -1;
 
-        if(argc > 3 || argc < 2){
+        if(argc > 4 || argc < 3){
                 perror("Incorrect command line arguments\n");
                 exit(-1);
         }
 	
         file = fopen(argv[1],"r");
         initialize_topology();
-	if(argc == 3)
-	        end_node = atoi(argv[2]);
-	else
-		end_node = total_nodes;
+	start_node = atoi(argv[2]) -1;
+	
+	for(i = 0;i < start_node;i++)
+		find_ak(i);
+	if(argc == 4){
+	        end_node = atoi(argv[3]);
+		johnson(start_node, end_node);
+	}
+	else{
+		johnson(start_node, start_node + 1);
+	}
 
-	johnson(end_node);
 	
 }

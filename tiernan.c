@@ -155,10 +155,11 @@ int check_in_visited(){
 	return 1;
 }
 
-void tiernan(int end_node){
+void tiernan(int start_node, int end_node){
 	int k,i,j,ckt=0;
 	//p[0] = 0;
-	for(i = 0; i<end_node; i++){
+	
+	for(i = start_node; i<end_node; i++){
 		visited_cnt = 0;
 		ckt = 0;
 		k = 0;
@@ -205,18 +206,25 @@ void tiernan(int end_node){
 
 
 int main(int argc, char *argv[]){
-        int i, end_node;
+        int i, start_node, end_node;
         total_nodes = -1;
 
-        if(argc > 3 || argc < 2){
+        if(argc > 4 || argc < 3){
                 perror("Incorrect command line arguments\n");
                 exit(-1);
         }
         file = fopen(argv[1],"r");
         initialize_topology();
-	if(argc == 3)
-	        end_node = atoi(argv[2]);
-	else
-		end_node = total_nodes;
-	tiernan(end_node);
+//	if(argc == 3)
+//	        end_node = atoi(argv[2]);
+//	else
+//		end_node = total_nodes;
+	start_node = atoi(argv[2]) - 1;
+	if(argc == 4){
+		end_node = atoi(argv[3]);
+		tiernan(start_node, end_node);
+	}
+	else{
+		tiernan(start_node, start_node + 1);
+	}
 }
