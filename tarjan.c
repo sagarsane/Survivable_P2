@@ -129,7 +129,7 @@ int backtrack(int v){
 		else if( w == s && length_of_circuit() != 2){
 			//print point stack as circuit;
 			if(check_in_visited()){
-				print_circuit();
+				//print_circuit();
 				ckt++;
 			}
 			f = 1;
@@ -163,7 +163,7 @@ void tarjan(int start_node, int end_node){
 		//printf("****For Current node: %d\n",i+1);
 		s = i;
 		flag = backtrack(i);
-		printf("Ckt cnt: %d\n",ckt);
+		//printf("Ckt cnt: %d\n",ckt);
 		while(marked.top != -1){
 			mark[marked.stk[marked.top--]] = 0;
 		}
@@ -175,7 +175,7 @@ void tarjan(int start_node, int end_node){
 
 int main(int argc, char *argv[]){
         int i, start_node, end_node;
-	
+	struct timeval p,q;	
         total_nodes = -1;
 
         if(argc > 4 || argc < 3){
@@ -185,6 +185,8 @@ int main(int argc, char *argv[]){
         file = fopen(argv[1],"r");
         initialize_topology();
 	start_node = atoi(argv[2]) - 1;
+
+	gettimeofday(&p,NULL);
 	if(argc == 4){
 	        end_node = atoi(argv[3]);
 		tarjan(start_node, end_node);
@@ -193,7 +195,7 @@ int main(int argc, char *argv[]){
 		//end_node = total_nodes;
 		tarjan(start_node, start_node +1);
 	}
-
-	
+	gettimeofday(&q,NULL);
+	printf("Running Time is: %8ld\n\n", q.tv_usec - p.tv_usec + (q.tv_sec-p.tv_sec)*1000000);
 	
 }

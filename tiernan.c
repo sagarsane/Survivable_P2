@@ -178,7 +178,7 @@ void tiernan(int start_node, int end_node){
 			else{
 				if(belongs_toG(k) && length_of_circuit()!=2){ //circuit confirmation
 					if(check_in_visited()){
-						print_circuit();//circuit is reported
+						//print_circuit();//circuit is reported
 						ckt++;
 					}
 				}
@@ -207,6 +207,7 @@ void tiernan(int start_node, int end_node){
 
 int main(int argc, char *argv[]){
         int i, start_node, end_node;
+	struct timeval p,q;
         total_nodes = -1;
 
         if(argc > 4 || argc < 3){
@@ -220,6 +221,7 @@ int main(int argc, char *argv[]){
 //	else
 //		end_node = total_nodes;
 	start_node = atoi(argv[2]) - 1;
+	gettimeofday(&p,NULL);
 	if(argc == 4){
 		end_node = atoi(argv[3]);
 		tiernan(start_node, end_node);
@@ -227,4 +229,7 @@ int main(int argc, char *argv[]){
 	else{
 		tiernan(start_node, start_node + 1);
 	}
+	gettimeofday(&q,NULL);
+	printf("Running Time is: %8ld\n\n", q.tv_usec - p.tv_usec + (q.tv_sec-p.tv_sec)*1000000);
+
 }

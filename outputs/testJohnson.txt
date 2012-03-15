@@ -1,0 +1,420 @@
+N = 10, d = 0.10
+Running Time is:        6
+
+Running Time is:        5
+
+Running Time is:        5
+
+Running Time is:        5
+
+Running Time is:        5
+
+Running Time is:        4
+
+Running Time is:        5
+
+Running Time is:        6
+
+Running Time is:        4
+
+Running Time is:        5
+
+N = 10, d = 0.15
+Running Time is:        6
+
+Running Time is:        2
+
+Running Time is:        3
+
+Running Time is:        4
+
+Running Time is:        4
+
+Running Time is:        2
+
+Running Time is:        3
+
+Running Time is:        3
+
+Running Time is:        3
+
+Running Time is:        3
+
+N = 10, d = 0.20
+Running Time is:        4
+
+Running Time is:        5
+
+Running Time is:        4
+
+Running Time is:        5
+
+Running Time is:        4
+
+Running Time is:        5
+
+Running Time is:        3
+
+Running Time is:        3
+
+Running Time is:        3
+
+Running Time is:        4
+
+N = 10, d = 0.25
+Running Time is:        4
+
+Running Time is:        4
+
+Running Time is:        4
+
+Running Time is:        5
+
+Running Time is:        6
+
+Running Time is:        5
+
+Running Time is:        4
+
+Running Time is:        4
+
+Running Time is:        5
+
+Running Time is:        6
+
+N = 15, d = 0.10
+Running Time is:        5
+
+Running Time is:        6
+
+Running Time is:        6
+
+Running Time is:        5
+
+Running Time is:        6
+
+Running Time is:        6
+
+Running Time is:        5
+
+Running Time is:        6
+
+Running Time is:        5
+
+Running Time is:        6
+
+N = 15, d = 0.15
+Running Time is:        9
+
+Running Time is:        9
+
+Running Time is:        9
+
+Running Time is:       10
+
+Running Time is:       10
+
+Running Time is:        8
+
+Running Time is:        9
+
+Running Time is:        6
+
+Running Time is:        9
+
+Running Time is:        7
+
+N = 15, d = 0.20
+Running Time is:       14
+
+Running Time is:       32
+
+Running Time is:        9
+
+Running Time is:       11
+
+Running Time is:       16
+
+Running Time is:       12
+
+Running Time is:       10
+
+Running Time is:       14
+
+Running Time is:       13
+
+Running Time is:       14
+
+N = 15, d = 0.25
+Running Time is:       13
+
+Running Time is:       10
+
+Running Time is:       16
+
+Running Time is:       12
+
+Running Time is:       17
+
+Running Time is:       13
+
+Running Time is:       11
+
+Running Time is:       22
+
+Running Time is:       21
+
+Running Time is:       14
+
+N = 20, d = 0.10
+Running Time is:       17
+
+Running Time is:       11
+
+Running Time is:       11
+
+Running Time is:       12
+
+Running Time is:       15
+
+Running Time is:       13
+
+Running Time is:       15
+
+Running Time is:       12
+
+Running Time is:       12
+
+Running Time is:       13
+
+N = 20, d = 0.15
+Running Time is:       28
+
+Running Time is:       22
+
+Running Time is:       23
+
+Running Time is:       13
+
+Running Time is:       13
+
+Running Time is:       13
+
+Running Time is:       15
+
+Running Time is:       21
+
+Running Time is:       15
+
+Running Time is:       20
+
+N = 20, d = 0.20
+Running Time is:       36
+
+Running Time is:       44
+
+Running Time is:       32
+
+Running Time is:       37
+
+Running Time is:       53
+
+Running Time is:       43
+
+Running Time is:       29
+
+Running Time is:       55
+
+Running Time is:       27
+
+Running Time is:       25
+
+N = 20, d = 0.25
+Running Time is:      326
+
+Running Time is:      113
+
+Running Time is:      135
+
+Running Time is:      107
+
+Running Time is:      125
+
+Running Time is:      179
+
+Running Time is:       87
+
+Running Time is:       66
+
+Running Time is:      189
+
+Running Time is:       77
+
+N = 25, d = 0.10
+Running Time is:       27
+
+Running Time is:       23
+
+Running Time is:       21
+
+Running Time is:       22
+
+Running Time is:       23
+
+Running Time is:       37
+
+Running Time is:       27
+
+Running Time is:       18
+
+Running Time is:       19
+
+Running Time is:       27
+
+N = 25, d = 0.15
+Running Time is:       60
+
+Running Time is:       34
+
+Running Time is:       69
+
+Running Time is:       43
+
+Running Time is:       46
+
+Running Time is:       58
+
+Running Time is:       51
+
+Running Time is:       29
+
+Running Time is:       49
+
+Running Time is:       56
+
+N = 25, d = 0.20
+Running Time is:      447
+
+Running Time is:      362
+
+Running Time is:      253
+
+Running Time is:      400
+
+Running Time is:      720
+
+Running Time is:      257
+
+Running Time is:      312
+
+Running Time is:     1247
+
+Running Time is:      309
+
+Running Time is:      290
+
+N = 25, d = 0.25
+Running Time is:     1635
+
+Running Time is:     7165
+
+Running Time is:    15288
+
+Running Time is:     5528
+
+Running Time is:    10027
+
+Running Time is:     1198
+
+Running Time is:     4598
+
+Running Time is:     7445
+
+Running Time is:    10255
+
+Running Time is:     6557
+
+N = 30, d = 0.10
+Running Time is:       54
+
+Running Time is:       35
+
+Running Time is:       55
+
+Running Time is:       40
+
+Running Time is:       62
+
+Running Time is:       53
+
+Running Time is:       63
+
+Running Time is:       28
+
+Running Time is:       46
+
+Running Time is:       65
+
+N = 30, d = 0.15
+Running Time is:      644
+
+Running Time is:      171
+
+Running Time is:      317
+
+Running Time is:      291
+
+Running Time is:       66
+
+Running Time is:      261
+
+Running Time is:      441
+
+Running Time is:      242
+
+Running Time is:      195
+
+Running Time is:      370
+
+N = 30, d = 0.20
+Running Time is:    17156
+
+Running Time is:    18407
+
+Running Time is:    15641
+
+Running Time is:     5176
+
+Running Time is:     7028
+
+Running Time is:    35058
+
+Running Time is:    38060
+
+Running Time is:    10534
+
+Running Time is:     8652
+
+Running Time is:    24178
+
+N = 30, d = 0.25
+Running Time is:  1968358
+
+Running Time is:   803960
+
+Running Time is:   387651
+
+Running Time is:  1138090
+
+Running Time is:  3885007
+
+Running Time is:   674810
+
+Running Time is:   739710
+
+Running Time is:  1124917
+
+Running Time is:  2680670
+
+Running Time is:   725978
+

@@ -195,7 +195,7 @@ int circuit(int v){
 			if(check_in_visited() && length_of_circuit() > 2)
 			{ 
 				//printB();
-				print_circuit();
+				//print_circuit();
 				ckt++;
 				//getchar();
 			}
@@ -300,7 +300,7 @@ void johnson(int start_node, int end_node){
 		b[i].cnt =0;
 		flag = circuit(i);
 		
-		printf("Ckt cnt: %d\n",ckt);
+		//printf("Ckt cnt: %d\n",ckt);
 		reset_visited();
 	}
 }
@@ -308,7 +308,7 @@ void johnson(int start_node, int end_node){
 
 int main(int argc, char *argv[]){
         int i, start_node, end_node;
-	
+	struct timeval p,q;	
         total_nodes = -1;
 
         if(argc > 4 || argc < 3){
@@ -322,6 +322,8 @@ int main(int argc, char *argv[]){
 	
 	for(i = 0;i < start_node;i++)
 		find_ak(i);
+
+	gettimeofday(&p,NULL);
 	if(argc == 4){
 	        end_node = atoi(argv[3]);
 		johnson(start_node, end_node);
@@ -329,6 +331,7 @@ int main(int argc, char *argv[]){
 	else{
 		johnson(start_node, start_node + 1);
 	}
+	gettimeofday(&q,NULL);
+	printf("Running Time is: %8ld\n\n", q.tv_usec - p.tv_usec + (q.tv_sec-p.tv_sec)*1000000);
 
-	
 }
