@@ -129,7 +129,7 @@ int backtrack(int v){
 		else if( w == s && length_of_circuit() != 2){
 			//print point stack as circuit;
 			if(check_in_visited()){
-				//print_circuit();
+				print_circuit();
 				ckt++;
 			}
 			f = 1;
@@ -186,7 +186,7 @@ int main(int argc, char *argv[]){
         initialize_topology();
 	start_node = atoi(argv[2]) - 1;
 
-	gettimeofday(&p,NULL);
+	//gettimeofday(&p,NULL);
 	if(argc == 4){
 	        end_node = atoi(argv[3]);
 		tarjan(start_node, end_node);
@@ -195,7 +195,7 @@ int main(int argc, char *argv[]){
 		//end_node = total_nodes;
 		tarjan(start_node, start_node +1);
 	}
-	gettimeofday(&q,NULL);
-	printf("Running Time is: %8ld\n\n", q.tv_usec - p.tv_usec + (q.tv_sec-p.tv_sec)*1000000);
+	//gettimeofday(&q,NULL);
+	//printf("Running Time is: %8ld\n\n", q.tv_usec - p.tv_usec + (q.tv_sec-p.tv_sec)*1000000);
 	
 }
